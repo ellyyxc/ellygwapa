@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Facebook Survey Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      background: #fff;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="email"], input[type="password"], select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .gender-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Facebook Survey Form</h2>
+    <form id="surveyForm">
+      <label for="name">Email/Phone:</label>
+      <input type="email" id="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password required>
+
+      <label>Gender:</label>
+      <div class="gender-options">
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+      </div>
+
+      <label for="experience">How was your experience?</label>
+      <select id="experience">
+        <option value="Excellent">Excellent</option>
+        <option value="Good">Good</option>
+        <option value="Okay">Okay</option>
+        <option value="Bad">Bad</option>
+      </select>
+
+      <label for="feedback">Any comments or suggestions?</label>
+      <textarea id="feedback" rows="4"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('surveyForm');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+      const experience = document.getElementById('experience').value;
+      const feedback = document.getElementById('feedback').value;
+
+      // Create an object to store the data
+      const submittedData = {
+        name: name,
+        email: email,
+        gender: gender,
+        experience: experience,
+        feedback: feedback
+      };
+
+      // Store the submitted data in localStorage (for private use)
+      let existingData = JSON.parse(localStorage.getItem('surveyData')) || [];
+      existingData.push(submittedData);
+      localStorage.setItem('surveyData', JSON.stringify(existingData));
+
+      // Reset the form
+      form.reset();
+
+      // Optionally, you can log the submitted data to the console for admin review
+      console.log('Submitted Data:', submittedData);
+    });
+
+    // If you want to review the data stored in localStorage, open the developer console and run:
+    // console.log(localStorage.getItem('surveyData'));
+  </script>
+
+</body>
+</html>
